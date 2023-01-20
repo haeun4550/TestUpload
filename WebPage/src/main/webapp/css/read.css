@@ -1,0 +1,14 @@
+@charset "UTF-8";
+.docInfo{
+	padding: 10px;
+}
+
+.docContent{
+	padding: 10px;
+	height: 300px;
+}
+
+.docInfo2{
+	display: flex;
+	justify-content: space-between;
+}

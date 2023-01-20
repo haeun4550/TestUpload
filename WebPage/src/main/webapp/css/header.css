@@ -1,0 +1,79 @@
+@charset "UTF-8";
+
+.header{
+	background-color:rgb(255, 251, 244);
+	height: 80px; 
+	display: grid;
+	border: solid 1px;
+	border-left-style: none;
+	border-top-style: none;
+	border-right-style: none;
+	border-bottom-color: #ffdb99;
+	grid-template-columns: 1fr 1fr 1fr;
+	align-items: center;
+	text-align: center;
+
+}
+
+.menu{
+	float: left;
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+a{
+	text-decoration: none;
+}
+a:link{
+	color: black;
+}
+a:visited{
+	color: black;
+}
+a:hover{
+	color: orange;
+}
+a:active{
+	color: black;
+}
+
+.loginForm{
+	display: grid;
+	grid-template-columns: 1fr 1fr
+}
+
+.login_dropdown{
+/* 	border: solid 1px black; */
+	float: left;
+	width:100px;
+	height: 20px;
+}
+
+#drop_content{
+	border: solid 1px black;
+/* 	position: absolute; */
+/*     z-index: 1; */
+/*     display: grid; */
+/*     grid-template-rows: 1fr 1fr; */
+}
+#drop_content a{
+	
+/*     font-size: 20px; */
+/*     background-color: #ffffff; */
+/*     text-decoration: none; */
+/*     border: solid 1px black; */
+/*     padding: 10px 36px; */
+/*     margin: 2px 0px 0px 0px; */
+}
+/* .photo:link,.freeBoard:link,.game:link{ */
+/* 	color:orange; */
+/* } */
+/* .photo:visited,.freeBoard:visited,.game:visited{ */
+/* 	color:orange; */
+/* } */
+/* .photo:hover,.freeBoard:hover,.game:hover{ */
+/* 	color:orange; */
+/* } */
+/* .photo:active,.freeBoard:active,.game:active{ */
+/* 	color:orange; */
+/* } */

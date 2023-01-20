@@ -1,0 +1,31 @@
+@charset "UTF-8";
+
+#boardTitle{
+	display: flex;
+	flex-direction: column;
+	text-align: center;
+	align-content: center;
+}
+
+#bar{
+	align-self: center;
+	height: 5px;
+	width: 100px;
+	background-color: #ffdb99;
+}
+
+#writeTitle{display: block;margin: 1px 2px 3px 4px;} 
+#writeContent{display: block;margin: 1px 2px 3px 4px;width:100%}
+#writeTitle input{
+	height: 30px;
+	width:100%}
+#writeContent textarea{
+	height: 200px;
+	width:100%}
+
+#writeSumitButton{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	align-content: center;
+}	

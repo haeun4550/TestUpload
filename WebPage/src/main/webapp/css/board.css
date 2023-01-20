@@ -1,0 +1,75 @@
+@charset "UTF-8";
+
+#left_mid{
+	display: flex;
+	flex-direction: column;
+/* 	grid-template-rows: 1fr 4fr; */
+	border: solid 1px;
+	border-right-color: #ffdb99;
+	border-left-style: none;
+	border-top-style: none;
+	border-bottom-style: none;
+	
+}
+#boardTitle{
+	display: flex;
+	flex-direction: column;
+	text-align: center;
+	align-content: center;
+}
+#bar{
+	align-self: center;
+	height: 5px;
+	width: 200px;
+	background-color: #ffdb99;
+}
+
+#bar2{
+	align-self: center;
+	height: 5px;
+	width: 100px;
+	background-color: #ffdb99;
+}
+/* .post{ */
+/* 	display:grid; */
+/* 	grid-template-rows: 1fr 8fr; */
+	
+/* } */
+.postList{
+	display:grid;
+	grid-template-columns: 0.5fr 2fr 1fr 1fr 0.5fr 0.5fr;
+	text-align: center;
+}
+
+.postBar{
+	display:grid;
+	grid-template-columns: 0.5fr 2fr 1fr 1fr 0.5fr 0.5fr;
+	text-align: center;
+}
+.postTitle{
+	text-align: left;
+}
+
+.mid_bottom{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.doWriteBox{
+	position: absolute;
+	text-align: center;
+	left: 75%;
+	float: right;
+	padding: 5px;
+	width:60px;
+	height: 25px;
+	border-radius: 25%;
+	background-color: #ffdb99;
+}
+
+
+
+/* .postNum{ */
+/* 	align-self: center; */
+/* } */

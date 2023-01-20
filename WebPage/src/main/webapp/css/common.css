@@ -1,0 +1,7 @@
+@charset "UTF-8";
+
+.mid{
+	display: grid;
+	grid-template-columns: 1fr 3fr 1fr;
+	
+}
