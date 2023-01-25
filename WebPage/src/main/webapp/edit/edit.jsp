@@ -1,3 +1,4 @@
+<%@page import="com.haeun.webPage.db.Db"%>
 <%@page import="com.haeun.weaPage.dto.Dto"%>
 <%@page import="com.haeun.webPage.dao.Dao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -14,9 +15,15 @@
 <body>
 <%
 String n = request.getParameter("n");
+String board = request.getParameter("board");
+String dbBoard= null;
 Dao dao = new Dao();
-Dto d = dao.read(n);
-
+if(board!=null&&board.equals("member")){
+	dbBoard= Db.TABLE_BOARD;
+}else if(board!=null&&board.equals("free")){
+	dbBoard = Db.TABLE_FREEBOARD;
+}
+Dto d = dao.read(n,dbBoard);
 %>
 <%@ include file="../header/header.jsp"%>
 <div class="mid">
@@ -30,6 +37,8 @@ Dto d = dao.read(n);
 			<div class="writeBox">
 			<form action="/ServletEdit">
 		<input name="n" type="hidden" value=<%=n%>>
+		<input name="dbBoard" type="hidden" value=<%=dbBoard%>>
+		<input name="board" type="hidden" value=<%=board%>>
 			<div id="writeTitle">
 	<input name="title" value=<%=d.title%> autofocus>
 	</div> <hr>

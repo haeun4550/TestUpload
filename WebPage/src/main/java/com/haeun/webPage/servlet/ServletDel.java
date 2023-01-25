@@ -21,8 +21,8 @@ public class ServletDel extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	   
 	   Dao dao = new Dao();
-	   dao.delete(request.getParameter("n"));
-	   response.sendRedirect("board/board.jsp");
+	   dao.delete(request.getParameter("n"),request.getParameter("dbBoard"));
+	   response.sendRedirect("board/board.jsp?board="+request.getParameter("board"));
 	}
 
 	

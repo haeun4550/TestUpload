@@ -3,6 +3,7 @@ import java.io.IOException;
 
 import com.haeun.weaPage.dto.Dto;
 import com.haeun.webPage.dao.Dao;
+import com.haeun.webPage.db.Db;
 
 import jakarta.servlet.ServletException;
 //import jakarta.servlet.ServletException;
@@ -16,7 +17,8 @@ import java.io.IOException;
 public class ServletComment extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    
+    String board = null;
+    String dbBoard = null;
    @Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	   String postNum = request.getParameter("postNum");
@@ -26,9 +28,14 @@ public class ServletComment extends HttpServlet {
 			   request.getParameter("postNum"),
 			   0
 			   );
+	   
 	   Dao dao = new Dao();
-	   dao.comment(dto);
-	   response.sendRedirect("read/read.jsp?n="+postNum);
+	   board = request.getParameter("board");
+	   dbBoard = request.getParameter("dbBoard");
+	   dao.comment(dto,board);
+	   String sql= String.format("update %s set commentCnt=commentCnt+1 where n=%s",dbBoard,postNum);
+	   dao.update(sql);
+	   response.sendRedirect("read/read.jsp?n="+postNum+"&cmd=comment&board="+board);
 	   
 	}
 

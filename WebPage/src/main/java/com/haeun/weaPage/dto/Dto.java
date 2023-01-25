@@ -19,6 +19,7 @@ public class Dto {
 	public String comment;
 	public String postNum;
 	public String reportOption;
+	public String commentCnt;
 	
 	
 	
@@ -37,10 +38,10 @@ public class Dto {
 		
 	}
 	
-	public Dto(String title, String id, String comment) {
+	public Dto(String title, String id, String content) {
 		super();
 		this.title=title;
-		this.comment=comment;
+		this.content=content;
 		this.id=id;
 	}
 	
@@ -58,7 +59,7 @@ public class Dto {
 	}
 	
 	public Dto(String n, String title, String id, String dt, String hit, String content, String recommend,
-			String reportCnt, String reportCon, String reportOption) {
+			String reportCnt, String commentCnt) {
 		super();
 		this.n = n;
 		this.id = id;
@@ -68,11 +69,10 @@ public class Dto {
 		this.hit = hit;
 		this.content = content;
 		this.recommend = recommend;
-		this.reportCon = reportCon;
-		this.reportOption = reportOption;
+		this.commentCnt = commentCnt;
 	}
 	
-	public Dto(String n, String title, String id, String content, String dt, String hit, String recommend) {
+	public Dto(String n, String title, String id, String content, String dt, String hit, String recommend,String commentCnt, int x) {
 		super();
 		this.n = n;
 		this.id = id;
@@ -81,5 +81,6 @@ public class Dto {
 		this.hit = hit;
 		this.content = content;
 		this.recommend = recommend;
+		this.commentCnt = commentCnt;
 	}
 }

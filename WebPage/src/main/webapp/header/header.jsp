@@ -13,7 +13,7 @@
 		</div>
 		<div class="freeBoard">
 			<h4>
-				<a href="/board/board.jsp">Board</a>
+				<a href="/board/board.jsp?board=free">Board</a>
 			</h4>
 		</div>
 		<div class="game">
@@ -37,19 +37,13 @@
 		%>
 		
 		<%=id%>님, 환영합니다.
-<!-- 		</div> -->
 		<div class="login_dropdown">
 			<p onclick="dropMenu()">▼</p>
-<!-- 			<img onclick="dropMenu()" src=> -->
-<!-- 			<button onclick="dropMenu()" class="button">▼</button> -->
 			<div style="display: none" id="drop_content">
 				<a href="/login/logout.jsp">logout</a> <br>
 				<a href="/myPage/myPage.jsp">마이페이지</a>
 			</div>
 		</div>
-<!-- 		<h4> -->
-<!-- 			<a href="/WebPage/login/logout.jsp">Logout</a> -->
-<!-- 		</h4> -->
 		<script>
 			function dropMenu(){
 				let click = document.getElementById("drop_content");

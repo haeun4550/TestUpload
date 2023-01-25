@@ -3,6 +3,7 @@ import java.io.IOException;
 
 import com.haeun.weaPage.dto.Dto;
 import com.haeun.webPage.dao.Dao;
+import com.haeun.webPage.db.Db;
 
 import jakarta.servlet.ServletException;
 //import jakarta.servlet.ServletException;
@@ -24,9 +25,16 @@ public class ServletWrite extends HttpServlet {
 			   request.getParameter("id"),
 			   request.getParameter("content")
 			   );
+	   String board = request.getParameter("board");
+	   String dbBoard = null;
 	   Dao dao = new Dao();
-	   dao.write(dto);
-	   response.sendRedirect("board/board.jsp");
+	   if(board.equals("member")) {
+		   dbBoard = Db.TABLE_BOARD;
+	   }else if(board.equals("free")) {
+		   dbBoard = Db.TABLE_FREEBOARD;
+	   }
+	   dao.write(dto,dbBoard);
+	   response.sendRedirect("board/board.jsp?board="+board);
 	   
 	}
 

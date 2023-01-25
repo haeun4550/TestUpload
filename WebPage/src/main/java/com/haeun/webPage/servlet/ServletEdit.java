@@ -24,8 +24,8 @@ public class ServletEdit extends HttpServlet {
 			   request.getParameter("content")
 			   );
 	   Dao dao = new Dao();
-	   dao.edit(dto,request.getParameter("n"));
-	   response.sendRedirect("board/board.jsp");
+	   dao.edit(dto,request.getParameter("n"),request.getParameter("dbBoard"));
+	   response.sendRedirect("board/board.jsp?board="+request.getParameter("board"));
 	}
 
 	

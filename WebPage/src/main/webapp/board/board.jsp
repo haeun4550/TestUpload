@@ -1,7 +1,8 @@
+<%@page import="com.haeun.webPage.dao.AAA"%>
+<%@page import="com.haeun.webPage.dao.Dao"%>
 <%@page import="com.haeun.webPage.db.Db"%>
 <%@page import="com.haeun.weaPage.dto.Dto"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="com.haeun.webPage.dao.Dao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -17,13 +18,20 @@
 	<%
 	Dao dao = new Dao();
 	String currentPage = request.getParameter("page");
+	String board = request.getParameter("board");
+	String dbBoard = null;
+	if(board!=null&&board.equals("member")){
+		dbBoard = Db.TABLE_BOARD;
+	}else if(board!=null&&board.equals("free")){
+		dbBoard = Db.TABLE_FREEBOARD;
+	}
 	int totalPageNum=0;
 	int totalBlockNum=0;
 	if(currentPage==null){
 		currentPage="1";
 	}
-	ArrayList<Dto> posts = dao.postList(currentPage);
-	int postCount = dao.postCount();
+	ArrayList<Dto> posts = dao.postList(currentPage,dbBoard);
+	int postCount = dao.postCount(dbBoard);
 	if((postCount%Db.PAGE)==0){
 	totalPageNum = postCount/Db.PAGE; //딱 떨어질때
 	}else{
@@ -35,7 +43,6 @@
 		totalBlockNum = (totalPageNum/Db.PAGE_PER_BLOCK)+1; //자투리남을때
 	}
 	int currentBlockNum = (int)Math.ceil((double)(Integer.parseInt(currentPage))/Db.PAGE_PER_BLOCK);
-// 	System.out.println(currentBlockNum);
 	int blockStartNum =(currentBlockNum-1)*Db.PAGE_PER_BLOCK+1;
 	int blockEndNum = currentBlockNum*Db.PAGE_PER_BLOCK;
 	int nextPage = 0;
@@ -60,13 +67,18 @@
 		<div id="left_mid">
 			<div id="bar"></div>
 			<div id="boardList">
-				자유게시판<br> 회원게시판
+				<a href="board.jsp?board=free">자유게시판</a><br>
+				<a href="board.jsp?board=member">회원게시판</a>
 			</div>
 		</div>
 		<div id="mid_mid">
 			<div id="boardTitle">
 				<br>
+				<%if(dbBoard!=null&&board.equals("member")){%>
+				<h2>회원게시판</h2>
+				<%}else if(dbBoard!=null&&board.equals("free")){%>
 				<h2>자유게시판</h2>
+				<%}%>
 				<div id="bar2"></div>
 			</div>
 			<br>
@@ -86,11 +98,11 @@
 				</div>
 				<div class="mid_bottom">
 					<div class="pageBlock">
-						<a href=board.jsp?page=1><%="<<"%></a>
+						<a href="board.jsp?page=1&board=<%=board%>&board=<%=board%>"><%="<<"%></a>
 						<%
 				if(canPrev){
 					%>
-						<a href=board.jsp?page=<%=prevPage%>><%="<"%></a>
+						<a href="board.jsp?page=<%=prevPage%>&board=<%=board%>"><%="<"%></a>
 						<%
 				}
 				%>
@@ -98,25 +110,25 @@
 						<%
 				if(blockEndNum>totalPageNum){
 					for(int i=blockStartNum;i<=totalPageNum;i++){%>
-						<a href=board.jsp?page=<%=i%>><%=i%></a>
+						<a href="board.jsp?page=<%=i%>&board=<%=board%>"><%=i%></a>
 						<%
 					}
 				}else{
 				for(int i=blockStartNum;i<=blockEndNum;i++){ %>
-						<a href=board.jsp?page=<%=i%>><%=i%></a>
+						<a href="board.jsp?page=<%=i%>&board=<%=board%>"><%=i%></a>
 						<%} 
 						}%>
 						🔸
 						<%
 				if(canNext){
 					%>
-						<a href=board.jsp?page=<%=nextPage%>><%=">"%></a>
+						<a href="board.jsp?page=<%=nextPage%>&board=<%=board%>"><%=">"%></a>
 						<%}
 						%>
-					<a href=board.jsp?page=<%=totalPageNum%>><%=">>"%></a>
+					<a href="board.jsp?page=<%=totalPageNum%>&board=<%=board%>"><%=">>"%></a>
 					</div>
 					<div class="doWriteBox">
-					<a href="../write/write.jsp">글쓰기</a>
+					<a href="../write/write.jsp?board=<%=board%>">글쓰기</a>
 					</div>
 				</div>
 
