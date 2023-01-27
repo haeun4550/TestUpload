@@ -1,0 +1,8 @@
+@charset "UTF-8";
+
+#bar2{
+	align-self: center;
+	height: 5px;
+	width: 100px;
+	background-color: #ffdb99;
+}

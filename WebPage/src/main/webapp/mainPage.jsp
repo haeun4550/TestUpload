@@ -6,8 +6,8 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
-<link rel="stylesheet" href="css/header.css">
+<link rel="stylesheet" href="/css/header.css">
 <body>
-	<%@ include file="header/header.jsp"%>
+	<%@ include file="/header/header.jsp"%>
 </body>
 </html>

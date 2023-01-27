@@ -10,40 +10,25 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
-<link rel="stylesheet" href="../css/header.css">
-<link rel="stylesheet" href="../css/read.css">
-<link rel="stylesheet" href="../css/common.css">
+<link rel="stylesheet" href="/css/header.css">
+<link rel="stylesheet" href="/css/read.css">
+<link rel="stylesheet" href="/css/common.css">
 <body>
-	<%@ include file="../header/header.jsp"%>
+	<%@ include file="/header/header.jsp"%>
 	<%
 	String sId = (String) session.getAttribute("id");
-	String board = request.getParameter("board");
-	String dbBoard = null;
-	if(board!=null&&board.equals("member")){
-		dbBoard = Db.TABLE_BOARD;
-	}else if(board!=null&&board.equals("free")){
-		dbBoard = Db.TABLE_FREEBOARD;
-	}
+	String board = (String)request.getAttribute("board");
+	String dbBoard = (String)request.getAttribute("dbboard");
+	
 	if (sId == null) {
 		sId = "익명";
 	} else {
 		sId = (String) session.getAttribute("id");
 	}
-	String n = request.getParameter("n");
-	String cmd = request.getParameter("cmd");
-	Dao dao = new Dao();
-	if (cmd != null && cmd.equals("rec")) {
-		String sql = String.format("update %s set recommend=recommend+1,hit=hit-1 where n=%s", dbBoard, n);
-		dao.update(sql);
-	}
-	if (cmd != null && cmd.equals("comment")) {
-		String sql = String.format("update %s set hit=hit-1 where n=%s", dbBoard, n);
-		dao.update(sql);
-	}
-	String sql = String.format("update %s set hit=hit+1 where n=%s", dbBoard, n);
-	dao.update(sql);
-	Dto d = dao.read(n,dbBoard);
+	Dto d = (Dto)request.getAttribute("post");
 	%>
+	
+	
 	<div class="mid">
 		<div class="left_mid"></div>
 		<div class="mid_mid">
@@ -53,13 +38,13 @@
 				<div class="docInfo2">
 					<div>
 						<span style="color: gray"><%=d.dt%> | 조회수 : <%=d.hit%></span> <a
-							href="read.jsp?n=<%=n%>&cmd=rec&board=<%=board%>"><img src="../img/heart.png"
+							href="/page/read?n=<%=d.n%>&cmd=rec&board=<%=board%>"><img src="../img/heart.png"
 							height="15" width="15"></a>
 						<%=d.recommend%>
 					</div>
 					<div class="docEdit">
-						<a href="../edit/edit.jsp?n=<%=n%>&board=<%=board%>">수정하기</a> / <a
-							href="/ServletDel?n=<%=n%>&board=<%=board%>&dbBoard=<%=dbBoard%>">삭제하기</a>
+						<a href="/page/edit?n=<%=d.n%>&board=<%=board%>">수정하기</a> / <a
+							href="/page/del?n=<%=d.n%>&board=<%=board%>&dbBoard=<%=dbBoard%>">삭제하기</a>
 					</div>
 				</div>
 			</div>
@@ -72,7 +57,7 @@
 			<hr>
 			<div class="comment">
 				<%
-				ArrayList<Dto> comments = dao.commentList(n,board);
+				ArrayList<Dto> comments =(ArrayList<Dto>)request.getAttribute("comments");
 				for (int i = 0; i < comments.size(); i++) {
 				%>
 				<%=comments.get(i).re_id%>
@@ -82,9 +67,9 @@
 				<%
 				}
 				%>
-				<form action="/ServletComment">
+				<form action="/page/comment">
 					<%=sId%>
-					<input name="postNum" type="hidden" value="<%=n%>">
+					<input name="postNum" type="hidden" value="<%=d.n%>">
 					<input name="re_id" type="hidden" value="<%=sId%>"> 
 					<input name="board" type="hidden" value="<%=board%>"> 
 					<input name="dbBoard" type="hidden" value="<%=dbBoard%>"> 
@@ -92,7 +77,7 @@
 				</form>
 			</div>
 		</div>
-		<div class="right_mid"></div>
+<!-- 		<div class="right_mid"></div> -->
 	</div>
 
 </body>

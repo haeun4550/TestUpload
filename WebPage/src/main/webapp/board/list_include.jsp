@@ -14,7 +14,7 @@
 						<%
 						for (int i = 0; i < posts.size(); i++) {
 						%>
-						<a href="../read/read.jsp?n=<%=posts.get(i).n%>&board=<%=board%>"><%=posts.get(i).title%></a>
+						<a href="/page/read?n=<%=posts.get(i).n%>&board=<%=board%>"><%=posts.get(i).title%></a>
 						💬<%=posts.get(i).commentCnt%>
 						<hr>
 						<%

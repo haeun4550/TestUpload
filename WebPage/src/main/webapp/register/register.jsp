@@ -6,18 +6,18 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
-<link rel="stylesheet" href="../css/header.css">
-<link rel="stylesheet" href="../css/common.css">
-<link rel="stylesheet" href="../css/register.css">
+<link rel="stylesheet" href="/css/header.css">
+<link rel="stylesheet" href="/css/common.css">
+<link rel="stylesheet" href="/css/register.css">
 <body>
-	<%@ include file="../header/header.jsp"%>
+	<%@ include file="/header/header.jsp"%>
 	<div class="mid">
 		<div class="left_mid"></div>
 		<div class="mid_mid"> 
 		<br>
 		<h3>회원가입</h3> <hr> <br>
 		<h5><span style="color:red">*</span>필수 입력 사항</h5> <hr>
-		<form action="procRegister.jsp" method="get">
+		<form action="/member/register" method="get">
 		<div id="registerForm">
 		<div class="block"><h4><span style="color:red">*</span>아이디</h4></div>
 		<div class="block"><input name="id" autofocus></div>

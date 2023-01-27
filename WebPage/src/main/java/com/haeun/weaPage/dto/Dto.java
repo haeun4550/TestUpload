@@ -83,4 +83,13 @@ public class Dto {
 		this.recommend = recommend;
 		this.commentCnt = commentCnt;
 	}
+
+	public Dto(String id, String password, String re_password, String birth, String email) {
+		super();
+		this.id = id;
+		this.password = password;
+		this.re_password = re_password;
+		this.birth = birth;
+		this.email = email;
+	}
 }

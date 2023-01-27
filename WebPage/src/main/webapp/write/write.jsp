@@ -6,15 +6,15 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
-<link rel="stylesheet" href="../css/header.css">
-<link rel="stylesheet" href="../css/write.css">
-<link rel="stylesheet" href="../css/common.css">
+<link rel="stylesheet" href="/css/header.css">
+<link rel="stylesheet" href="/css/write.css">
+<link rel="stylesheet" href="/css/common.css">
 <body>
 	<%
 	String sId = (String) session.getAttribute("id");
 	String board = request.getParameter("board");
 	%>
-	<%@ include file="../header/header.jsp"%>
+	<%@ include file="/header/header.jsp"%>
 	<div class="mid">
 		<div class="left_mid"></div>
 		<div class="mid_mid">
@@ -25,7 +25,7 @@
 			</div>
 			<br> <br>
 			<div class="writeBox">
-				<form action="../ServletWrite">
+				<form action="/page/write">
 					<input name="board" type="hidden" value=<%=board%>>
 					<input name="id" type="hidden" value=<%=sId%>>
 					<div id="writeTitle">

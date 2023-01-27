@@ -33,20 +33,18 @@ Dto dto = dao.selectMember(sId);
 		<div id="mid_mid">
 			<div id="boardTitle">
 				<br>
-				<h2>내정보</h2>
+				<h2>글관리</h2>
 				<div id="bar2"></div>
 			</div>
 			<br>
 			<div>
-				<h4>🔸아이디 : <%=dto.id%></h4> <br>
-				<h4>🔸비밀번호 : <%=dto.password%></h4><br>
-				<h4>🔸생년월일 : <%=dto.birth%></h4><br>
-				<h4>🔸이메일 : <%=dto.email%></h4><br>
+				<h4>🔸작성한 게시글 : <%=dto.id%></h4> <br>
+				<h4>🔸작성한 댓글 : <%=dto.password%></h4><br>
 				<hr>
 			</div>
 		</div>
-<!-- 	<div id="right_mid"></div> -->
 	</div>
+	<div id="right_mid"></div>
 
 
 </body>

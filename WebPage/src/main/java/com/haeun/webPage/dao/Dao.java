@@ -144,12 +144,12 @@ public class Dao extends Da {
 		return posts;
 	}
 	
-	public ArrayList<Dto> freePostList(String page){
+	public ArrayList<Dto> memberPostList(String page,String board){
 		ArrayList<Dto> posts = new ArrayList<>();
 		try {
 			super.dbConnect();
 			int startPost = (Integer.parseInt(page)-1)*Db.PAGE;
-			String sql = String.format("select * from %s n order by n desc limit %s,%s",Db.TABLE_FREEBOARD,startPost,Db.PAGE);
+			String sql = String.format("select * from %s n order by n desc limit %s,%s",board,startPost,Db.PAGE);
 			rs= st.executeQuery(sql);
 			while(rs.next()) {
 				posts.add(new Dto(
@@ -230,4 +230,29 @@ public class Dao extends Da {
 		super.dbClose();
 		return post;
 	}
+
+
+public Dto selectMember(String id) {
+	Dto member = null;
+	super.dbConnect();
+	try {
+		String sql = String.format("select * from %s where id='%s'",Db.TABLE_MEMBER,id);
+		rs= st.executeQuery(sql);
+		rs.next();
+		member = new Dto(
+				rs.getString("n"),
+				rs.getString("id"),
+				rs.getString("password"),
+				rs.getString("re_password"),
+				rs.getString("birth"),
+				rs.getString("email"),
+				rs.getString("joinApprove"),
+				rs.getString("reportCnt")
+				);
+	}catch(Exception e) {
+		e.printStackTrace();
+	}
+	super.dbClose();
+	return member;
+}
 }

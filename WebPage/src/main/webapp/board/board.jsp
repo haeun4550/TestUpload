@@ -1,4 +1,3 @@
-<%@page import="com.haeun.webPage.dao.AAA"%>
 <%@page import="com.haeun.webPage.dao.Dao"%>
 <%@page import="com.haeun.webPage.db.Db"%>
 <%@page import="com.haeun.weaPage.dto.Dto"%>
@@ -11,64 +10,30 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
-<link rel="stylesheet" href="../css/header.css">
-<link rel="stylesheet" href="../css/common.css">
-<link rel="stylesheet" href="../css/board.css">
+<link rel="stylesheet" href="/css/header.css">
+<link rel="stylesheet" href="/css/common.css">
+<link rel="stylesheet" href="/css/board.css">
 <body>
 	<%
-	Dao dao = new Dao();
+	String board  = (String)request.getAttribute("board");
+	String dbBoard  = (String)request.getAttribute("dbBoard");
+	int blockStartNum  = (int)request.getAttribute("blockStartNum");
+	int blockEndNum  = (int)request.getAttribute("blockEndNum");
+	int nextPage  = (int)request.getAttribute("nextPage");
+	int prevPage  = (int)request.getAttribute("prevPage");
+	int totalPageNum  = (int)request.getAttribute("totalPageNum");
+	boolean canPrev  = (boolean)request.getAttribute("canPrev");
+	boolean canNext  = (boolean)request.getAttribute("canNext");
 	String currentPage = request.getParameter("page");
-	String board = request.getParameter("board");
-	String dbBoard = null;
-	if(board!=null&&board.equals("member")){
-		dbBoard = Db.TABLE_BOARD;
-	}else if(board!=null&&board.equals("free")){
-		dbBoard = Db.TABLE_FREEBOARD;
-	}
-	int totalPageNum=0;
-	int totalBlockNum=0;
-	if(currentPage==null){
-		currentPage="1";
-	}
-	ArrayList<Dto> posts = dao.postList(currentPage,dbBoard);
-	int postCount = dao.postCount(dbBoard);
-	if((postCount%Db.PAGE)==0){
-	totalPageNum = postCount/Db.PAGE; //딱 떨어질때
-	}else{
-		totalPageNum = (postCount/Db.PAGE)+1; //자투리 남을때
-	}
-	if((totalPageNum%Db.PAGE_PER_BLOCK)==0){
-		totalBlockNum = totalPageNum/Db.PAGE_PER_BLOCK; //딱 떨어질때
-	}else{
-		totalBlockNum = (totalPageNum/Db.PAGE_PER_BLOCK)+1; //자투리남을때
-	}
-	int currentBlockNum = (int)Math.ceil((double)(Integer.parseInt(currentPage))/Db.PAGE_PER_BLOCK);
-	int blockStartNum =(currentBlockNum-1)*Db.PAGE_PER_BLOCK+1;
-	int blockEndNum = currentBlockNum*Db.PAGE_PER_BLOCK;
-	int nextPage = 0;
-	int prevPage= 0;
-	boolean canPrev = true;
-	if(currentBlockNum==1){
-		canPrev = false;
-	}else{
-		canPrev = true;
-	prevPage = (currentBlockNum-1)*Db.PAGE_PER_BLOCK;
-	}
-	boolean canNext = true;
-	if(currentBlockNum<totalBlockNum){
-		canNext = true;
-	nextPage = currentBlockNum*Db.PAGE_PER_BLOCK +1;
-	}else{
-		canNext= false;
-	}
+	ArrayList<Dto> posts = (ArrayList<Dto>)request.getAttribute("posts");
 	%>
-	<%@ include file="../header/header.jsp"%>
+	<%@ include file="/header/header.jsp"%>
 	<div class="mid">
 		<div id="left_mid">
 			<div id="bar"></div>
 			<div id="boardList">
-				<a href="board.jsp?board=free">자유게시판</a><br>
-				<a href="board.jsp?board=member">회원게시판</a>
+				<a href="/page/board?board=free">자유게시판</a><br>
+				<a href="/page/board?board=member">회원게시판</a>
 			</div>
 		</div>
 		<div id="mid_mid">
@@ -94,15 +59,15 @@
 				</div>
 				<hr>
 				<div class="postList">
-					<%@ include file="list_include.jsp"%>
+					<%@ include file="/board/list_include.jsp"%>
 				</div>
 				<div class="mid_bottom">
 					<div class="pageBlock">
-						<a href="board.jsp?page=1&board=<%=board%>&board=<%=board%>"><%="<<"%></a>
+						<a href="/page/board?page=1&board=<%=board%>&board=<%=board%>"><%="<<"%></a>
 						<%
 				if(canPrev){
 					%>
-						<a href="board.jsp?page=<%=prevPage%>&board=<%=board%>"><%="<"%></a>
+						<a href="/page/board?page=<%=prevPage%>&board=<%=board%>"><%="<"%></a>
 						<%
 				}
 				%>
@@ -110,31 +75,31 @@
 						<%
 				if(blockEndNum>totalPageNum){
 					for(int i=blockStartNum;i<=totalPageNum;i++){%>
-						<a href="board.jsp?page=<%=i%>&board=<%=board%>"><%=i%></a>
+						<a href="/page/board?page=<%=i%>&board=<%=board%>"><%=i%></a>
 						<%
 					}
 				}else{
 				for(int i=blockStartNum;i<=blockEndNum;i++){ %>
-						<a href="board.jsp?page=<%=i%>&board=<%=board%>"><%=i%></a>
+						<a href="/page/board?page=<%=i%>&board=<%=board%>"><%=i%></a>
 						<%} 
 						}%>
 						🔸
 						<%
 				if(canNext){
 					%>
-						<a href="board.jsp?page=<%=nextPage%>&board=<%=board%>"><%=">"%></a>
+						<a href="/page/board?page=<%=nextPage%>&board=<%=board%>"><%=">"%></a>
 						<%}
 						%>
-					<a href="board.jsp?page=<%=totalPageNum%>&board=<%=board%>"><%=">>"%></a>
+					<a href="/page/board?page=<%=totalPageNum%>&board=<%=board%>"><%=">>"%></a>
 					</div>
-					<div class="doWriteBox">
-					<a href="../write/write.jsp?board=<%=board%>">글쓰기</a>
+					<div class="doWriteBox"> 
+					<a href="/write/write.jsp?board=<%=board%>">글쓰기</a>
 					</div>
 				</div>
 
 			</div>
 		</div>
-		<div id="right_mid"></div>
+<!-- 		<div id="right_mid"></div> 나중에 추가하면 dropdown하고 겹치는 이슈해결하기--> 
 	</div>
 
 </body>

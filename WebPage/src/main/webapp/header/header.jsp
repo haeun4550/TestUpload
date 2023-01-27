@@ -13,14 +13,16 @@
 		</div>
 		<div class="freeBoard">
 			<h4>
-				<a href="/board/board.jsp?board=free">Board</a>
+				<a href="/page/board?board=free">Board</a>
 			</h4>
 		</div>
 		<div class="game">
 			<h4>Game</h4>
 		</div>
 		<div class="myPage">
-			<h4>MyPage</h4>
+			<h4>
+			<a href="/myPage/myPage.jsp">myPage</a>
+			</h4>
 		</div>
 	</div>
 	<div class="loginForm">
@@ -28,7 +30,6 @@
 		String id = (String) session.getAttribute("id");
 		if (id == null) {
 		%>
-<!-- 		<div class="loginState"> -->
 		<h4>
 			<a href="/login/loginForm.jsp">Login</a>
 		</h4>
@@ -40,7 +41,7 @@
 		<div class="login_dropdown">
 			<p onclick="dropMenu()">▼</p>
 			<div style="display: none" id="drop_content">
-				<a href="/login/logout.jsp">logout</a> <br>
+				<a href="/member/logout">logout</a> <br>
 				<a href="/myPage/myPage.jsp">마이페이지</a>
 			</div>
 		</div>
@@ -53,7 +54,6 @@
 					click.style.display = "none"
 				}
 			}
-				
 		</script>
 		<%
 		}
