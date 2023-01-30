@@ -13,18 +13,22 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 
 import com.haeun.weaPage.dto.Dto;
-import com.haeun.webPage.dao.Dao;
+//import com.haeun.webPage.dao.Dao;
 import com.haeun.webPage.db.Db;
+import com.haeun.webPage.sevice.Service;
+import com.haeun.webPage.sevice.ServiceMember;
 import com.mysql.cj.Session;
 
 @WebServlet("/member/*")
 public class ControllerMember extends HttpServlet {
-	Dao dao;
+//	Dao dao;
 	String forwardPage;
+	ServiceMember service;
 
 	@Override
 	public void init() throws ServletException {
-		dao = new Dao();
+//		dao = new Dao();
+		service = new ServiceMember();
 	}
 
 	@Override
@@ -38,7 +42,7 @@ public class ControllerMember extends HttpServlet {
 				String nowPw = request.getParameter("password");
 				String sql = String.format("select count(*) from %s where id='%s' and password='%s'", Db.TABLE_MEMBER,
 						nowId, nowPw);
-				int count = dao.count(sql);
+				int count = service.count(sql);
 				if (count == 1) {
 					System.out.println("로그인 성공");
 					session.setAttribute("id", nowId);
@@ -60,11 +64,11 @@ public class ControllerMember extends HttpServlet {
 				String birth = request.getParameter("birth");
 				String email = request.getParameter("email");
 				while (true) {
-					int count = dao.count("select count(*) from " + Db.TABLE_MEMBER);
+					int count = service.count("select count(*) from " + Db.TABLE_MEMBER);
 					if (count == 0) {
 						break;
 					} else {
-						ArrayList<Dto> members = dao.memberList();
+						ArrayList<Dto> members = service.memberList();
 						for (int i = 0; i < members.size(); i++) {
 					String dbId = members.get(i).id;
 					if (id.equals(dbId)) {
@@ -84,7 +88,7 @@ public class ControllerMember extends HttpServlet {
 					}
 				}
 			}
-				dao.memberUpdate(id, password, re_password, birth, email);		
+				service.memberUpdate(id, password, re_password, birth, email);		
 				forwardPage = "/login/loginForm.jsp";
 
 		}

@@ -1,3 +1,4 @@
+<%@page import="com.haeun.webPage.board.BoardListProcessor"%>
 <%@page import="com.haeun.webPage.dao.Dao"%>
 <%@page import="com.haeun.webPage.db.Db"%>
 <%@page import="com.haeun.weaPage.dto.Dto"%>
@@ -17,15 +18,8 @@
 	<%
 	String board  = (String)request.getAttribute("board");
 	String dbBoard  = (String)request.getAttribute("dbBoard");
-	int blockStartNum  = (int)request.getAttribute("blockStartNum");
-	int blockEndNum  = (int)request.getAttribute("blockEndNum");
-	int nextPage  = (int)request.getAttribute("nextPage");
-	int prevPage  = (int)request.getAttribute("prevPage");
-	int totalPageNum  = (int)request.getAttribute("totalPageNum");
-	boolean canPrev  = (boolean)request.getAttribute("canPrev");
-	boolean canNext  = (boolean)request.getAttribute("canNext");
-	String currentPage = request.getParameter("page");
-	ArrayList<Dto> posts = (ArrayList<Dto>)request.getAttribute("posts");
+	BoardListProcessor blp = (BoardListProcessor)request.getAttribute("blp");
+	ArrayList<Dto> posts = blp.getPosts();
 	%>
 	<%@ include file="/header/header.jsp"%>
 	<div class="mid">
@@ -65,41 +59,47 @@
 					<div class="pageBlock">
 						<a href="/page/board?page=1&board=<%=board%>&board=<%=board%>"><%="<<"%></a>
 						<%
-				if(canPrev){
+				if(blp.canPrev){
 					%>
-						<a href="/page/board?page=<%=prevPage%>&board=<%=board%>"><%="<"%></a>
+						<a href="/page/board?page=<%=blp.prevPage%>&board=<%=board%>"><%="<"%></a>
 						<%
 				}
 				%>
 						🔸
 						<%
-				if(blockEndNum>totalPageNum){
-					for(int i=blockStartNum;i<=totalPageNum;i++){%>
+				if(blp.blockEndNum>blp.totalPageNum){
+					for(int i=blp.blockStartNum;i<=blp.totalPageNum;i++){%>
 						<a href="/page/board?page=<%=i%>&board=<%=board%>"><%=i%></a>
 						<%
 					}
 				}else{
-				for(int i=blockStartNum;i<=blockEndNum;i++){ %>
+				for(int i=blp.blockStartNum;i<=blp.blockEndNum;i++){ %>
 						<a href="/page/board?page=<%=i%>&board=<%=board%>"><%=i%></a>
 						<%} 
 						}%>
 						🔸
 						<%
-				if(canNext){
+				if(blp.canNext){
 					%>
-						<a href="/page/board?page=<%=nextPage%>&board=<%=board%>"><%=">"%></a>
+						<a href="/page/board?page=<%=blp.nextPage%>&board=<%=board%>"><%=">"%></a>
 						<%}
 						%>
-					<a href="/page/board?page=<%=totalPageNum%>&board=<%=board%>"><%=">>"%></a>
+					<a href="/page/board?page=<%=blp.totalPageNum%>&board=<%=board%>"><%=">>"%></a>
 					</div>
 					<div class="doWriteBox"> 
 					<a href="/write/write.jsp?board=<%=board%>">글쓰기</a>
 					</div>
 				</div>
-
 			</div>
 		</div>
 <!-- 		<div id="right_mid"></div> 나중에 추가하면 dropdown하고 겹치는 이슈해결하기--> 
+	</div>
+	<div class="bottom">
+		<form action="/page/search?board=<%=board%>">
+		<input name="search" height="10" width="50">
+		<input type="submit" value="검색">
+		</form>
+	
 	</div>
 
 </body>
