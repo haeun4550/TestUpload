@@ -32,11 +32,11 @@ public class Service{
 	public ArrayList<Dto> commentList(String n, String board) {
 		return dao.commentList(n, board);
 	}
-	public BoardListProcessor postList(String currentPage, String dbBoard) {
+	public BoardListProcessor postList(String currentPage, String dbBoard,String search) {
 		if(currentPage==null) {
 			currentPage = "1";
 		}
-		BoardListProcessor blp = new BoardListProcessor(dao,currentPage,dbBoard);
+		BoardListProcessor blp = new BoardListProcessor(dao,currentPage,dbBoard,search);
 		return blp;
 	}
 	

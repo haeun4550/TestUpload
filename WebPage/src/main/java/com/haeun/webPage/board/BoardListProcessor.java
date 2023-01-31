@@ -14,29 +14,40 @@ public class BoardListProcessor {
 	public int currentBlockNum=0;
 	public int blockStartNum = 0;
 	public int blockEndNum = 0;
+	public int postCount = 0;
 	public int nextPage = 0;
 	public int prevPage = 0;
 	public boolean canPrev = true;
 	public boolean canNext = true;
 	public String currentPage;
 	public String dbBoard;
-	public BoardListProcessor(Dao dao, String currentPage, String dbBoard) {
+	public String search;
+	public BoardListProcessor(Dao dao, String currentPage, String dbBoard, String search) {
 		super();
 		this.dao = dao;
 		this.currentPage = currentPage;
-		this.totalPageNum = getPageCount(dbBoard);
+		this.totalPageNum = getPageCount(dbBoard,search);
 		this.dbBoard = dbBoard;
+		this.search = search;
 		getList();
 		getPageBlock();
 	}
 	
 	public void getList() {
+		if(search==null) {
 		posts = dao.postList(currentPage,dbBoard);
+		}else {
+			posts= dao.postList(currentPage,dbBoard,search);
+		}
 	}
 	
-	public int getPageCount(String dbBoard) {
+	public int getPageCount(String dbBoard, String search) {
 		totalPageNum = 0;
-		int postCount = dao.postCount(dbBoard);
+		if(search==null) {
+		postCount = dao.postCount(dbBoard);
+		}else {
+		postCount = dao.postCount(dbBoard,search);	
+		}
 		if((postCount%Db.PAGE)==0) {
 			totalPageNum = postCount/Db.PAGE;
 		}else {

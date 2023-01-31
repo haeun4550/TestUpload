@@ -38,6 +38,22 @@ public class Dao extends Da {
 		return 0;
 	}
 	
+	public int postCount(String board, String search) {
+		int count = 0;
+		try {
+			super.dbConnect();
+			String sql = String.format("select count(*) from %s where title like '%%%s%%';",board,search);
+			rs= st.executeQuery(sql);
+			rs.next();
+			count= Integer.parseInt(rs.getString("count(*)"));
+			return count;
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		super.dbClose();
+		return 0;
+	}
+	
 	public void memberUpdate(String id,String pw,String re_pw,String birth,String email) {
 		try {
 			super.dbConnect();
@@ -123,6 +139,33 @@ public class Dao extends Da {
 			super.dbConnect();
 			int startPost = (Integer.parseInt(page)-1)*Db.PAGE;
 			String sql = String.format("select * from %s n order by n desc limit %s,%s",board,startPost,Db.PAGE);
+			rs= st.executeQuery(sql);
+			while(rs.next()) {
+				posts.add(new Dto(
+						rs.getString("n"),
+						rs.getString("title"),
+						rs.getString("id"),
+						rs.getString("dt"),
+						rs.getString("hit"),
+						rs.getString("content"),
+						rs.getString("recommend"),
+						rs.getString("reportCnt"),
+						rs.getString("commentCnt")
+						));
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		super.dbClose();
+		return posts;
+	}
+	
+	public ArrayList<Dto> postList(String page,String board, String search){
+		ArrayList<Dto> posts = new ArrayList<>();
+		try {
+			super.dbConnect();
+			int startPost = (Integer.parseInt(page)-1)*Db.PAGE;
+			String sql = String.format("select * from %s where title like '%%%s%%' and n order by n desc limit %s,%s",board,search,startPost,Db.PAGE);
 			rs= st.executeQuery(sql);
 			while(rs.next()) {
 				posts.add(new Dto(

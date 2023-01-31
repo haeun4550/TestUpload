@@ -84,7 +84,8 @@ public class Controller extends HttpServlet {
 						);
 			}else if(action.equals("/board")) {
 				String currentPage = request.getParameter("page");
-				BoardListProcessor blp = service.postList(currentPage, dbBoard);
+				String search = request.getParameter("search");
+				BoardListProcessor blp = service.postList(currentPage, dbBoard,search);
 				request.setAttribute("blp", blp);
 				forwardPage = "/board/board.jsp?page="+currentPage+"&board="+board;
 //			

@@ -57,11 +57,11 @@
 				</div>
 				<div class="mid_bottom">
 					<div class="pageBlock">
-						<a href="/page/board?page=1&board=<%=board%>&board=<%=board%>"><%="<<"%></a>
+						<a href="/page/board?page=1&board=<%=board%>&board=<%=board%>&search=<%=blp.search%>"><%="<<"%></a>
 						<%
 				if(blp.canPrev){
 					%>
-						<a href="/page/board?page=<%=blp.prevPage%>&board=<%=board%>"><%="<"%></a>
+						<a href="/page/board?page=<%=blp.prevPage%>&board=<%=board%>&search=<%=blp.search%>"><%="<"%></a>
 						<%
 				}
 				%>
@@ -69,22 +69,22 @@
 						<%
 				if(blp.blockEndNum>blp.totalPageNum){
 					for(int i=blp.blockStartNum;i<=blp.totalPageNum;i++){%>
-						<a href="/page/board?page=<%=i%>&board=<%=board%>"><%=i%></a>
+						<a href="/page/board?page=<%=i%>&board=<%=board%>&search=<%=blp.search%>"><%=i%></a>
 						<%
 					}
 				}else{
 				for(int i=blp.blockStartNum;i<=blp.blockEndNum;i++){ %>
-						<a href="/page/board?page=<%=i%>&board=<%=board%>"><%=i%></a>
+						<a href="/page/board?page=<%=i%>&board=<%=board%>&search=<%=blp.search%>"><%=i%></a>
 						<%} 
 						}%>
 						🔸
 						<%
 				if(blp.canNext){
 					%>
-						<a href="/page/board?page=<%=blp.nextPage%>&board=<%=board%>"><%=">"%></a>
+						<a href="/page/board?page=<%=blp.nextPage%>&board=<%=board%>&search=<%=blp.search%>"><%=">"%></a>
 						<%}
 						%>
-					<a href="/page/board?page=<%=blp.totalPageNum%>&board=<%=board%>"><%=">>"%></a>
+					<a href="/page/board?page=<%=blp.totalPageNum%>&board=<%=board%>&search=<%=blp.search%>"><%=">>"%></a>
 					</div>
 					<div class="doWriteBox"> 
 					<a href="/write/write.jsp?board=<%=board%>">글쓰기</a>
@@ -95,7 +95,8 @@
 <!-- 		<div id="right_mid"></div> 나중에 추가하면 dropdown하고 겹치는 이슈해결하기--> 
 	</div>
 	<div class="bottom">
-		<form action="/page/search?board=<%=board%>">
+		<form action="/page/board">
+		<input name="board" type="hidden" value=<%=board%>>
 		<input name="search" height="10" width="50">
 		<input type="submit" value="검색">
 		</form>
