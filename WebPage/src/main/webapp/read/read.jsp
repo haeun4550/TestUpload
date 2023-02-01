@@ -43,7 +43,7 @@
 						<%=d.recommend%>
 					</div>
 					<div class="docEdit">
-						<a href="/page/edit?n=<%=d.n%>&board=<%=board%>">수정하기</a> / <a
+						<a href="/page/edit?n=<%=d.n%>&board=<%=board%>&category=<%=d.category%>">수정하기</a> / <a
 							href="/page/del?n=<%=d.n%>&board=<%=board%>&dbBoard=<%=dbBoard%>">삭제하기</a>
 					</div>
 				</div>

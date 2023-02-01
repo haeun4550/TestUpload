@@ -54,6 +54,38 @@ public class Dao extends Da {
 		return 0;
 	}
 	
+	public int postSubCount(String board, String category) {
+		int count = 0;
+		try {
+			super.dbConnect();
+			String sql = String.format("select count(*) from %s where category='%s'",board,category);
+			rs= st.executeQuery(sql);
+			rs.next();
+			count= Integer.parseInt(rs.getString("count(*)"));
+			return count;
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		super.dbClose();
+		return 0;
+	}
+	
+	public int postCount(String board, String search, String category) {
+		int count = 0;
+		try {
+			super.dbConnect();
+			String sql = String.format("select count(*) from %s where title like '%%%s%%' and category='%s';",board,search,category);
+			rs= st.executeQuery(sql);
+			rs.next();
+			count= Integer.parseInt(rs.getString("count(*)"));
+			return count;
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		super.dbClose();
+		return 0;
+	}
+	
 	public void memberUpdate(String id,String pw,String re_pw,String birth,String email) {
 		try {
 			super.dbConnect();
@@ -133,6 +165,27 @@ public class Dao extends Da {
 		return comments;
 	}
 	
+	public ArrayList<Dto> categoryList(String board){
+		ArrayList<Dto> comments = new ArrayList<>();
+		try {
+			super.dbConnect();
+			String sql = String.format("select category from %s",Db.TABLE_COMMENT);
+			rs= st.executeQuery(sql);
+			while(rs.next()) {
+				comments.add(new Dto(
+						rs.getString("re_id"),
+						rs.getString("comment"),
+						rs.getString("postNum"),						
+						0
+						));
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		super.dbClose();
+		return comments;
+	}
+	
 	public ArrayList<Dto> postList(String page,String board){
 		ArrayList<Dto> posts = new ArrayList<>();
 		try {
@@ -187,6 +240,60 @@ public class Dao extends Da {
 		return posts;
 	}
 	
+	public ArrayList<Dto> postList(String page,String board, String search, String category){
+		ArrayList<Dto> posts = new ArrayList<>();
+		try {
+			super.dbConnect();
+			int startPost = (Integer.parseInt(page)-1)*Db.PAGE;
+			String sql = String.format("select * from %s where title like '%%%s%%' and category='%s' and n order by n desc limit %s,%s",board,search,category,startPost,Db.PAGE);
+			rs= st.executeQuery(sql);
+			while(rs.next()) {
+				posts.add(new Dto(
+						rs.getString("n"),
+						rs.getString("title"),
+						rs.getString("id"),
+						rs.getString("dt"),
+						rs.getString("hit"),
+						rs.getString("content"),
+						rs.getString("recommend"),
+						rs.getString("reportCnt"),
+						rs.getString("commentCnt")
+						));
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		super.dbClose();
+		return posts;
+	}
+	
+	public ArrayList<Dto> postSubList(String page,String board, String category){
+		ArrayList<Dto> posts = new ArrayList<>();
+		try {
+			super.dbConnect();
+			int startPost = (Integer.parseInt(page)-1)*Db.PAGE;
+			String sql = String.format("select * from %s where category='%s' and n order by n desc limit %s,%s",board,category,startPost,Db.PAGE);
+			rs= st.executeQuery(sql);
+			while(rs.next()) {
+				posts.add(new Dto(
+						rs.getString("n"),
+						rs.getString("title"),
+						rs.getString("id"),
+						rs.getString("dt"),
+						rs.getString("hit"),
+						rs.getString("content"),
+						rs.getString("recommend"),
+						rs.getString("reportCnt"),
+						rs.getString("commentCnt")
+						));
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		super.dbClose();
+		return posts;
+	}
+	
 	public ArrayList<Dto> memberPostList(String page,String board){
 		ArrayList<Dto> posts = new ArrayList<>();
 		try {
@@ -217,8 +324,8 @@ public class Dao extends Da {
 	public void write(Dto d,String board) {
 		super.dbConnect();
 		try {
-			String sql = String.format("insert into %s(title,id,dt,hit,content,recommend,reportCnt,commentCnt) values('%s','%s',now(),0,'%s',0,0,0)",
-					board,d.title,d.id,d.content);
+			String sql = String.format("insert into %s(title,id,dt,hit,content,recommend,reportCnt,commentCnt,category) values('%s','%s',now(),0,'%s',0,0,0,'%s')",
+					board,d.title,d.id,d.content,d.category);
 			st.executeUpdate(sql);
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -240,8 +347,8 @@ public class Dao extends Da {
 	public void edit(Dto d,String n,String board) {
 		super.dbConnect();
 		try {
-			String sql = String.format("update %s set title='%s', content='%s' where n=%s",
-					board,d.title,d.content,n);
+			String sql = String.format("update %s set title='%s', content='%s', category='%s' where n=%s",
+					board,d.title,d.content,d.category,n);
 			st.executeUpdate(sql);
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -265,6 +372,7 @@ public class Dao extends Da {
 					rs.getString("hit"),
 					rs.getString("recommend"),
 					rs.getString("commentCnt"),
+					rs.getString("category"),
 					0
 					);
 		}catch(Exception e) {

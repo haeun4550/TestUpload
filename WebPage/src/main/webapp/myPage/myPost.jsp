@@ -47,5 +47,8 @@ Dto dto = dao.selectMember(sId);
 	<div id="right_mid"></div>
 
 
+
+
+
 </body>
 </html>

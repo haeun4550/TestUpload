@@ -14,7 +14,7 @@
 <link rel="stylesheet" href="/css/common.css">
 <body>
 	<%
-	String n = request.getParameter("n");
+// 	String n = request.getParameter("n");
 	String board = (String) request.getAttribute("board");
 	String dbBoard = (String) request.getAttribute("dbBoard");
 	Dto d = (Dto) request.getAttribute("post");
@@ -32,6 +32,10 @@
 			<br> <br>
 			<div class="writeBox">
 				<form action="/page/edit_proc">
+					카테고리:<select name="category">
+					<option value="game">게임</option>
+					<option value="animal">동물</option>
+					</select>
 					<input name="n" type="hidden" value=<%=d.n%>> <input
 						name="dbBoard" type="hidden" value=<%=dbBoard%>> <input
 						name="board" type="hidden" value=<%=board%>>

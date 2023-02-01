@@ -1,4 +1,4 @@
-package com.haeun.webPage.servlet;
+package com.haeun.webPage.controller;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;

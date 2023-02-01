@@ -22,31 +22,49 @@ public class BoardListProcessor {
 	public String currentPage;
 	public String dbBoard;
 	public String search;
-	public BoardListProcessor(Dao dao, String currentPage, String dbBoard, String search) {
+	public String category;
+	public BoardListProcessor(Dao dao, String currentPage, String dbBoard, String search, String category) {
 		super();
 		this.dao = dao;
 		this.currentPage = currentPage;
-		this.totalPageNum = getPageCount(dbBoard,search);
+		this.totalPageNum = getPageCount(dbBoard,search,category);
 		this.dbBoard = dbBoard;
 		this.search = search;
+		this.category = category;
 		getList();
 		getPageBlock();
 	}
-	
+
 	public void getList() {
-		if(search==null) {
-		posts = dao.postList(currentPage,dbBoard);
-		}else {
-			posts= dao.postList(currentPage,dbBoard,search);
+		if(search==null&&category==null) { 
+			posts = dao.postList(currentPage,dbBoard);
+		}else if(search!=null&&category!=null&&search.equals("null")&&category.equals("null")) { 
+			posts = dao.postList(currentPage,dbBoard);
+		}else if(search!=null&&category.equals("null")){ 
+			posts= dao.postList(currentPage,dbBoard,search); 
+		}else if(search==null&&category!=null) { 
+			posts = dao.postSubList(currentPage, dbBoard, category);
+		}else if(search!=null&&search.equals("null")&&category!=null) {
+			posts = dao.postSubList(currentPage, dbBoard, category);
+		}else if(search!=null&&category!=null) {
+			posts = dao.postList(currentPage, dbBoard, search, category);  
 		}
 	}
 	
-	public int getPageCount(String dbBoard, String search) {
+	public int getPageCount(String dbBoard, String search, String category) {
 		totalPageNum = 0;
-		if(search==null) {
-		postCount = dao.postCount(dbBoard);
-		}else {
-		postCount = dao.postCount(dbBoard,search);	
+		if(search==null&&category==null) {
+			postCount = dao.postCount(dbBoard);
+		}else if(search!=null&&category!=null&&search.equals("null")&&category.equals("null")){
+			postCount = dao.postCount(dbBoard);
+		}else if(search!=null&&category.equals("null")){
+			postCount = dao.postCount(dbBoard,search);	
+		}else if(search==null&&category!=null) {
+			postCount = dao.postSubCount(dbBoard, category);
+		}else if(search!=null&&search.equals("null")&&category!=null){
+			postCount = dao.postSubCount(dbBoard, category);
+		}else if(search!=null&&category!=null) {
+			postCount = dao.postCount(dbBoard,search,category);
 		}
 		if((postCount%Db.PAGE)==0) {
 			totalPageNum = postCount/Db.PAGE;

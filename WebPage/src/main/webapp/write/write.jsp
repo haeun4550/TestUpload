@@ -28,6 +28,10 @@
 				<form action="/page/write">
 					<input name="board" type="hidden" value=<%=board%>>
 					<input name="id" type="hidden" value=<%=sId%>>
+					카테고리:<select name="category">
+					<option value="game">게임</option>
+					<option value="animal">동물</option>
+					</select>
 					<div id="writeTitle">
 						<input name="title" placeholder="제목을 입력해주세요" autofocus>
 					</div>

@@ -1,4 +1,4 @@
-package com.haeun.webPage.servlet;
+package com.haeun.webPage.controller;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -46,7 +46,8 @@ public class Controller extends HttpServlet {
 				Dto dto = new Dto(
 						request.getParameter("title"),
 						request.getParameter("id"),
-						request.getParameter("content")
+						request.getParameter("content"),
+						request.getParameter("category")
 						);
 				service.write(dto, dbBoard);
 			}else if(action.equals("/read")) {
@@ -78,16 +79,17 @@ public class Controller extends HttpServlet {
 			}else if(action.equals("/edit_proc")) {
 				forwardPage = "/page/read?n="+n+"&board="+board;
 				service.edit(
-						new Dto(request.getParameter("title"),request.getParameter("content")),
+						new Dto(request.getParameter("title"),request.getParameter("content"),request.getParameter("category")),
 						n,
 						dbBoard
 						);
 			}else if(action.equals("/board")) {
 				String currentPage = request.getParameter("page");
 				String search = request.getParameter("search");
-				BoardListProcessor blp = service.postList(currentPage, dbBoard,search);
+				String category = request.getParameter("category");
+				BoardListProcessor blp = service.postList(currentPage,dbBoard,search,category);
 				request.setAttribute("blp", blp);
-				forwardPage = "/board/board.jsp?page="+currentPage+"&board="+board;
+				forwardPage = "/board/board.jsp?page="+currentPage+"&board="+board+"&search="+search+"&category="+category;
 //			
 			}else if(action.equals("/comment")) {
 				String postNum = request.getParameter("postNum");
